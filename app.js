@@ -11,18 +11,18 @@ const Record = require('./models/record')
 const randomGen = require('./randomgen')
 const host = 'http://localhost:3000/'
 
-// // 判別開發環境
-// if (process.env.NODE_ENV !== 'production') {
-//   // 如果不是 production 模式
-//   require('dotenv').config()
-//   // 使用 dotenv 讀取 .env 檔案
-// }
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {
+  // 如果不是 production 模式
+  require('dotenv').config()
+  // 使用 dotenv 讀取 .env 檔案
+}
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('views/images'));
 
-mongoose.connect('mongodb://localhost/shortURL', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shortURL', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', () => { console.log('mongodb error!') })
 db.once('open', () => { console.log('mongodb connected!') })
@@ -100,6 +100,6 @@ app.get('/:code', (req, res) => {
   })
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`app is running on localhost:${port}`)
 })
