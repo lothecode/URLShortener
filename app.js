@@ -85,11 +85,11 @@ app.post('/', (req, res) => {
 )
 
 // copy URL action
-// app.post('/output', (req, res) => {
-//   let success_message = '您已成功複製網址'
-//   console.log('copied')
-//   res.render('output', { output: `${host}${randomCode}`, success_message })
-// })
+app.post('/output', (req, res) => {
+  let success_message = '您已成功複製網址'
+  console.log('copied')
+  res.render('output', { output: `${host}${randomCode}`, success_message })
+})
 
 // short URL redirect to original url
 app.get('/:code', (req, res) => {
