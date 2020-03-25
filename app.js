@@ -9,7 +9,7 @@ const flash = require('connect-flash')
 // 因為connect - flash是需要存儲在session模塊，需要安裝express - session
 const Record = require('./models/record')
 const randomGen = require('./randomgen')
-const host = 'http://localhost:3000/'
+const host = 'https://ducktool.herokuapp.com/'
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {
@@ -92,13 +92,13 @@ app.post('/', (req, res) => {
 // })
 
 // short URL redirect to original url
-// app.get('/:code', (req, res) => {
-//   console.log(req.params.code)
-//   Record.findOne({ random_code: req.params.code }, (err, record) => {
-//     if (err) return console.error(err)
-//     res.redirect(`${record.input}`)
-//   })
-// })
+app.get('/:code', (req, res) => {
+  console.log(req.params.code)
+  Record.findOne({ random_code: req.params.code }, (err, record) => {
+    if (err) return console.error(err)
+    res.redirect(`${record.input}`)
+  })
+})
 
 app.listen(process.env.PORT || port, () => {
   console.log(`app is running on localhost:${port}`)
