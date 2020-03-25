@@ -9,7 +9,7 @@ const flash = require('connect-flash')
 // 因為connect - flash是需要存儲在session模塊，需要安裝express - session
 const Record = require('./models/record')
 const randomGen = require('./randomgen')
-const host = 'http://localhost:3000/'
+const host = 'https://ducktool.herokuapp.com/'
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {
@@ -88,7 +88,7 @@ app.post('/', (req, res) => {
 app.post('/output', (req, res) => {
   let success_message = '您已成功複製網址'
   console.log('copied')
-  res.render('output', { output: `${randomCode}`, success_message })
+  res.render('output', { output: `${host}${randomCode}`, success_message })
 })
 
 // short URL redirect to original url
