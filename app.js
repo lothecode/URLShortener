@@ -88,7 +88,7 @@ app.post('/', (req, res) => {
 app.post('/output', (req, res) => {
   let success_message = '您已成功複製網址'
   console.log('copied')
-  res.render('output', { output: `${host}${randomCode}`, success_message })
+  res.render('output', { output: `${randomCode}`, success_message })
 })
 
 // short URL redirect to original url
