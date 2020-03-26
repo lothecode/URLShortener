@@ -6,14 +6,12 @@
       {{>messages}}
       <form action=" /" method="POST">
         <div class=" input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="input">URL :</span>
-          </div>
-          <input type="text" class="form-control" name="url" placeholder="Paste the link here">
+          <input type="text" class="form-control" name="url" placeholder="http(s)://...">
           <div class="input-group-append">
             <button type="submit" class="btn btn-success">Shorten URL</button>
           </div>
         </div>
+        <small id="inputHelp" class="form-text pl-2">Please paste the link to be shortened here.</small>
       </form>
     </div>
   </div>

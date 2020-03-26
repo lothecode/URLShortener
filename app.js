@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('views/images'));
+app.use(express.static('public'))
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shortURL', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 const db = mongoose.connection
@@ -50,24 +51,20 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   const inputURL = req.body.url
   const urlValidate = inputURL.slice(0, 4)
-  console.log(urlValidate)
 
   if (urlValidate === '') {
     req.flash('warning_msg', '您尚未輸入網址')
-    console.log('empty')
     res.redirect('/')
   } else if (urlValidate != 'http') {
     req.flash('warning_msg', '您輸入的不是網址(ex. http(s)://...)')
-    console.log('this is not a url')
     res.redirect('/')
   } else {
     randomCode = randomGen()
-    console.log('Random Code is', randomCode)
     Record.findOne({ random_code: randomCode }, (err, used) => {
       if (err) return console.error(err)
 
       if (used) {
-        console.log('used')
+        console.log('used, 307')
         return res.redirect(307, '/') // 307 Temporary Redirect
       } else {
         const record = new Record({
@@ -87,17 +84,18 @@ app.post('/', (req, res) => {
 // copy URL action
 app.post('/output', (req, res) => {
   let success_message = '您已成功複製網址'
-  console.log('copied')
   res.render('output', { output: `${host}${randomCode}`, success_message })
 })
 
 // short URL redirect to original url
 app.get('/:code', (req, res) => {
-  console.log(req.params.code)
-  Record.findOne({ random_code: req.params.code }, (err, record) => {
-    if (err) return console.error(err)
-    res.redirect(`${record.input}`)
-  })
+  Record.findOne({ random_code: req.params.code })
+    .lean()
+    .exec((err, record) => {
+      if (err) return console.error(err)
+
+      if (record) res.redirect(`${record.input}`)
+    })
 })
 
 app.listen(process.env.PORT || port, () => {

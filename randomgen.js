@@ -1,7 +1,6 @@
 const Record = require('./models/record')
 
 function randomCodeGenerator() {
-  console.log('this function will generate 5 digitals random code')
   const lowercase = 'abcdefghijklmnopqrstuvwxyz'
   const uppercase = lowercase.toUpperCase()
   const numbers = '1234567890'

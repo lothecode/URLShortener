@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans TC', sans-serif;
+ }
+
+ @media screen and (max-width: 600px) {
+ .btn{
+  font-size: 0.5rem;
+  }
+
+}
