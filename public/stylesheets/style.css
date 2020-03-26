@@ -3,7 +3,7 @@
   font-family: 'Noto Sans TC', sans-serif;
  }
 
- @media screen and (max-width: 600px) {
+ @media screen and (max-width: 768px) {
  .btn{
   font-size: 0.5rem;
   }
